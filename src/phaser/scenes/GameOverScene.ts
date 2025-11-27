@@ -8,6 +8,10 @@ export default class GameOverScene extends Phaser.Scene {
   create(data: { score: number }) {
     const { score } = data;
 
+    const storedBest = Number(window.localStorage.getItem("best-score") || 0);
+    const bestScore = Math.max(score, storedBest);
+    window.localStorage.setItem("best-score", String(bestScore));
+
     this.cameras.main.fadeIn(200, 0, 0, 0);
 
     const panel = this.add.rectangle(480, 360, 520, 300, 0x0b1221, 0.92);
@@ -22,9 +26,17 @@ export default class GameOverScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(480, 340, `Score : ${score}`, {
+      .text(480, 330, `Score : ${score}`, {
         fontSize: "28px",
         color: "#c7f9cc",
+        fontFamily: "Inter, sans-serif",
+      })
+      .setOrigin(0.5);
+
+    this.add
+      .text(480, 370, `Meilleur : ${bestScore}`, {
+        fontSize: "20px",
+        color: "#f8fafc",
         fontFamily: "Inter, sans-serif",
       })
       .setOrigin(0.5);
