@@ -21,6 +21,8 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
+    this.resetState();
+
     this.add.rectangle(0, 0, 2000, 2000, 0x0b1221, 0.65).setOrigin(0);
     this.add.rectangle(0, 0, 2000, 2000, 0x16a34a, 0.06).setOrigin(0);
 
@@ -64,6 +66,15 @@ export default class MainScene extends Phaser.Scene {
     );
 
     this.events.emit("score-changed", this.score);
+  }
+
+  private resetState() {
+    this.score = 0;
+    this.enemySpeed = ENEMY_BASE_SPEED;
+    this.spawnEvent?.remove(false);
+    this.scoreEvent?.remove(false);
+    this.difficultyEvent?.remove(false);
+    this.enemies?.clear(true, true);
   }
 
   update() {

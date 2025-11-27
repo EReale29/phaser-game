@@ -57,6 +57,20 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     playButton.on("pointerdown", () => {
+      this.scene.stop("MenuScene");
+      this.scene.start("MainScene");
+      this.scene.launch("UIScene");
+    });
+
+    this.input.keyboard?.addCapture?.(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.input.keyboard?.addCapture?.(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.input.keyboard?.on?.("keydown-Space", () => {
+      this.scene.stop("MenuScene");
+      this.scene.start("MainScene");
+      this.scene.launch("UIScene");
+    });
+    this.input.keyboard?.on?.("keydown-Enter", () => {
+      this.scene.stop("MenuScene");
       this.scene.start("MainScene");
       this.scene.launch("UIScene");
     });

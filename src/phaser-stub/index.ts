@@ -70,16 +70,20 @@ namespace Keyboard {
     DOWN = "ArrowDown" as any,
     LEFT = "ArrowLeft" as any,
     RIGHT = "ArrowRight" as any,
+    SPACE = "Space" as any,
+    ENTER = "Enter" as any,
   }
 
   export class KeyboardPlugin {
     private keyMap: Record<string, Key> = {};
+    private emitter = new EventEmitter();
 
     constructor() {
       if (typeof window !== "undefined") {
         window.addEventListener("keydown", (e) => {
           const key = this.keyMap[e.code];
           if (key) key.isDown = true;
+          this.emitter.emit(`keydown-${e.code}`);
         });
         window.addEventListener("keyup", (e) => {
           const key = this.keyMap[e.code];
@@ -108,6 +112,15 @@ namespace Keyboard {
     addKey(code: KeyCodes) {
       if (!this.keyMap[code as any]) this.keyMap[code as any] = new Key();
       return this.keyMap[code as any];
+    }
+
+    addCapture(_code: KeyCodes) {
+      // noop to mirror Phaser API
+    }
+
+    on(event: string, cb: (...args: any[]) => void) {
+      this.emitter.on(event, cb);
+      return cb;
     }
   }
 }
@@ -611,8 +624,11 @@ class Game {
       const scene = this.scenes.get(key)!;
       scene.gameObjects.forEach((obj) => {
         if (!obj.interactive || !(obj instanceof Text)) return;
-        const width = obj.text.length * 14;
-        const height = parseInt(obj.style.fontSize || "20", 10) + 8;
+        const fontSize = parseInt(obj.style.fontSize || "20", 10);
+        const paddingX = obj.style.padding?.x ?? 0;
+        const paddingY = obj.style.padding?.y ?? 0;
+        const width = obj.text.length * fontSize * 0.6 + paddingX * 2;
+        const height = fontSize + paddingY * 2;
         const left = obj.x - width / 2;
         const right = obj.x + width / 2;
         const top = obj.y - height / 2;

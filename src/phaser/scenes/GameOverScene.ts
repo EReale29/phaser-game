@@ -40,11 +40,19 @@ export default class GameOverScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 
-    retryButton.on("pointerdown", () => {
+    const restart = () => {
       this.scene.stop("GameOverScene");
       this.scene.stop("MainScene");
       this.scene.stop("UIScene");
-      this.scene.start("MenuScene");
-    });
+      this.scene.start("MainScene");
+      this.scene.launch("UIScene");
+    };
+
+    retryButton.on("pointerdown", restart);
+
+    this.input.keyboard?.addCapture?.(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.input.keyboard?.addCapture?.(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.input.keyboard?.on?.("keydown-Enter", restart);
+    this.input.keyboard?.on?.("keydown-Space", restart);
   }
 }
