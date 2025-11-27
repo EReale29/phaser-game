@@ -27,10 +27,16 @@ export default function GamePage() {
         className="card w-full max-w-4xl overflow-hidden border border-emerald-400/20 bg-black/40"
         style={{ aspectRatio: "4 / 3" }}
       />
-      <p className="mt-4 text-center text-slate-200/80">
-        Déplacez-vous avec les flèches ou WASD. Les ennemis deviennent plus
-        rapides, collectez des points et tenez bon !
-      </p>
+      <div className="mt-4 space-y-2 text-center text-slate-200/80">
+        <p>
+          Déplacez-vous avec les flèches ou WASD. Esquivez les drones rouges et
+          attrapez les sphères vertes pour activer un bouclier temporaire.
+        </p>
+        <p className="text-emerald-200/80">
+          Survivez longtemps pour augmenter le multiplicateur et pulvériser votre
+          meilleur score.
+        </p>
+      </div>
     </main>
   );
 }
