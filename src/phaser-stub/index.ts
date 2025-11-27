@@ -196,7 +196,7 @@ class DisplayList {
 
 // Physics
 class ArcadeBody {
-  velocity = { x: 0, y: 0 };
+  velocity = new Vector2(0, 0);
   maxVelocity = 1000;
   drag = 1;
   bounce = { x: 0, y: 0 };
