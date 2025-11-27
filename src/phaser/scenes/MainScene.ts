@@ -44,8 +44,7 @@ export default class MainScene extends Phaser.Scene {
       .rectangle(0, 0, width, height, 0x16a34a, 0.08)
       .setOrigin(0);
 
-    const gridContainer = this.add.container(centerX, centerY);
-    const grid = this.add.graphics();
+    const grid = this.add.graphics({ x: centerX, y: centerY });
     grid.lineStyle(1, 0x10b981, 0.12);
     const spacing = 80;
     for (let x = -width / 2; x <= width / 2; x += spacing) {
@@ -55,10 +54,8 @@ export default class MainScene extends Phaser.Scene {
       grid.lineBetween(-width / 2, y, width / 2, y);
     }
 
-    gridContainer.add(grid);
-
     this.tweens.add({
-      targets: gridContainer,
+      targets: grid,
       angle: 360,
       duration: 24000,
       ease: "Linear",
