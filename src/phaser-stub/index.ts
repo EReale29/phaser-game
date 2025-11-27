@@ -500,6 +500,9 @@ class Game {
     this.canvas.width = config.width;
     this.canvas.height = config.height;
     this.canvas.style.background = config.backgroundColor;
+    this.canvas.style.width = "100%";
+    this.canvas.style.height = "100%";
+    this.canvas.style.display = "block";
     this.ctx = this.canvas.getContext("2d");
     parent.innerHTML = "";
     parent.appendChild(this.canvas);

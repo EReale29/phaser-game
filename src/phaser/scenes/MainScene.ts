@@ -23,8 +23,15 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.resetState();
 
-    this.add.rectangle(0, 0, 2000, 2000, 0x0b1221, 0.65).setOrigin(0);
-    this.add.rectangle(0, 0, 2000, 2000, 0x16a34a, 0.06).setOrigin(0);
+    const { right: width, bottom: height, centerX, centerY } =
+      this.physics.world.bounds;
+
+    this.add
+      .rectangle(0, 0, width, height, 0x0b1221, 0.65)
+      .setOrigin(0);
+    this.add
+      .rectangle(0, 0, width, height, 0x16a34a, 0.06)
+      .setOrigin(0);
 
     this.cursors = this.input.keyboard!.createCursorKeys();
     this.wasd = this.input.keyboard!.addKeys({
@@ -34,7 +41,7 @@ export default class MainScene extends Phaser.Scene {
       d: Phaser.Input.Keyboard.KeyCodes.D,
     }) as Record<string, Phaser.Input.Keyboard.Key>;
 
-    this.player = this.createPlayer();
+    this.player = this.createPlayer(centerX, centerY);
     this.enemies = this.physics.add.group();
 
     this.spawnEvent = this.time.addEvent({
@@ -85,8 +92,8 @@ export default class MainScene extends Phaser.Scene {
     return this.enemySpeed;
   }
 
-  private createPlayer() {
-    const rect = this.add.rectangle(480, 360, 46, 46, 0x34d399, 1);
+  private createPlayer(x: number, y: number) {
+    const rect = this.add.rectangle(x, y, 46, 46, 0x34d399, 1);
     this.physics.add.existing(rect);
     const body = rect.body as Phaser.Physics.Arcade.Body;
     body.setCollideWorldBounds(true);
