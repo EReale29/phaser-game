@@ -621,8 +621,10 @@ class Game {
 
   private handlePointer(evt: MouseEvent, type: "pointerover" | "pointerout" | "pointerdown") {
     const rect = this.canvas.getBoundingClientRect();
-    const x = evt.clientX - rect.left;
-    const y = evt.clientY - rect.top;
+    const scaleX = this.canvas.width / rect.width;
+    const scaleY = this.canvas.height / rect.height;
+    const x = (evt.clientX - rect.left) * scaleX;
+    const y = (evt.clientY - rect.top) * scaleY;
     this.activeScenes.forEach((key) => {
       const scene = this.scenes.get(key)!;
       scene.gameObjects.forEach((obj) => {
